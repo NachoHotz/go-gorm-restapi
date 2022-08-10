@@ -13,6 +13,16 @@ func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
   var users []models.User
   db.DB.Find(&users)
 
+  if users == nil || len(users) == 0 {
+    w.WriteHeader(http.StatusNotFound)
+    w.Header().Set("Content-Type", "application/json")
+    w.Write([]byte(`{
+      "status": 404,
+      "message": "Users not found"
+    }`))
+    return
+  }
+
   json.NewEncoder(w).Encode(&users)
 }
 
@@ -24,8 +34,14 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 
   if uniqueUser.ID == 0 {
     w.WriteHeader(http.StatusNotFound)
-    w.Write([]byte("User not found"))
+    w.Header().Set("Content-Type", "application/json")
+    w.Write([]byte(`{
+      "status": 404,
+      "message": "User not found"
+    }`))
+    return
   } else {
+    db.DB.Model(&uniqueUser).Association("Tasks").Find(&uniqueUser.Tasks)
     json.NewEncoder(w).Encode(&uniqueUser)
   }
 }
@@ -42,6 +58,7 @@ func PostUsersHandler(w http.ResponseWriter, r *http.Request) {
   if err != nil {
     w.WriteHeader(http.StatusBadRequest)
     w.Write([]byte(err.Error()))
+    return
   }
 
   json.NewEncoder(w).Encode(&user)
@@ -52,7 +69,22 @@ func DeleteUsersHandler(w http.ResponseWriter, r *http.Request) {
   var user models.User
 
   db.DB.First(&user, userId)
-  db.DB.Delete(&user)
 
-  json.NewEncoder(w).Encode(&user)
+  if user.ID == 0 {
+    w.WriteHeader(http.StatusNotFound)
+    w.Header().Set("Content-Type", "application/json")
+    w.Write([]byte(`{
+      "status": 404,
+      "message": "User not found"
+    }`))
+    return
+  } else {
+    db.DB.Delete(&user)
+    w.WriteHeader(http.StatusOK)
+    w.Header().Set("Content-Type", "application/json")
+    w.Write([]byte(`{
+      "status": 200,
+      "message": "User deleted"
+    }`))
+  }
 }

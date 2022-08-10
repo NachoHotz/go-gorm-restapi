@@ -7,6 +7,6 @@ type Task struct {
 
   Title string `json:"title" gorm:"not null;type:varchar(100)"`
   Description string `json:"description"`
-  Done bool `json:"completed"`
-  UserID string `json:"userID"`
+  Done bool `json:"done" gorm:"default:false"`
+  UserID uint `json:"user_id"`
 }
