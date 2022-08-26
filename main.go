@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+
 	"github.com/gorilla/mux"
 	"github.com/nachohotz/go-gorm-restapi/db"
 	"github.com/nachohotz/go-gorm-restapi/db/models"
@@ -9,6 +10,7 @@ import (
 )
 
 func main() {
+  db.LoadEnvs()
   db.DBConnect()
   db.DB.AutoMigrate(&models.User{})
   db.DB.AutoMigrate(&models.Task{})

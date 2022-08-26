@@ -2,14 +2,41 @@ package db
 
 import (
 	"log"
+	"os"
 
+	"github.com/subosito/gotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var DSN = "host=localhost port=5432 user=postgres dbname=gorm password=sempron"
+var dbPort string
+var dbHost string
+var dbUser string
+var dbPass string
+var dbName string
+
+var DSN string
+
 var DB *gorm.DB
 var err error
+
+func LoadEnvs() {
+  err := gotenv.Load()
+
+  if err != nil {
+    log.Fatal("Error loading .env file")
+  }
+
+  dbPort = os.Getenv("DB_PORT")
+  dbHost = os.Getenv("DB_HOST")
+  dbUser = os.Getenv("DB_USER")
+  dbPass = os.Getenv("DB_PASS")
+  dbName = os.Getenv("DB_NAME")
+
+  DSN = "host=" + dbHost + " port=" + dbPort + " user=" + dbUser + " dbname=" + dbName + " password=" + dbPass
+
+  log.Println("Loaded .env")
+}
 
 func DBConnect() {
   // connect to db
