@@ -35,7 +35,7 @@ func LoadEnvs() {
 
   DSN = "host=" + dbHost + " port=" + dbPort + " user=" + dbUser + " dbname=" + dbName + " password=" + dbPass
 
-  log.Println("Loaded .env")
+  log.Println("Loaded .env file")
 }
 
 func DBConnect() {
