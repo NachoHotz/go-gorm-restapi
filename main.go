@@ -1,13 +1,19 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/nachohotz/go-gorm-restapi/db"
 	"github.com/nachohotz/go-gorm-restapi/db/models"
 	"github.com/nachohotz/go-gorm-restapi/routes"
 )
+
+func mountRouter(r *mux.Router, path string, handler http.Handler) {
+  r.PathPrefix(path).Handler(handler)
+}
 
 func main() {
   db.LoadEnvs()
@@ -19,17 +25,9 @@ func main() {
 
   r.HandleFunc("/", routes.HomeHandler)
 
-  // User routes
-  r.HandleFunc("/users", routes.GetUsersHandler).Methods("GET")
-  r.HandleFunc("/users/{id}", routes.GetUserHandler).Methods("GET")
-  r.HandleFunc("/users", routes.PostUsersHandler).Methods("POST")
-  r.HandleFunc("/users/{id}", routes.DeleteUsersHandler).Methods("DELETE")
+  mountRouter(r, "/users", routes.UserRouter())
+  mountRouter(r, "/tasks", routes.TasksRouter())
 
-  // Task routes
-  r.HandleFunc("/tasks", routes.GetTasksHandler).Methods("GET")
-  r.HandleFunc("/tasks/{id}", routes.GetTaskHandler).Methods("GET")
-  r.HandleFunc("/tasks", routes.PostTaskHandler).Methods("POST")
-  r.HandleFunc("/tasks/{id}", routes.DeleteTaskHandler).Methods("DELETE")
-
-  http.ListenAndServe(":3001", r)
+  log.Println("Server running on PORT " + os.Getenv("PORT"))
+  log.Fatal(http.ListenAndServe(":3001", r))
 }

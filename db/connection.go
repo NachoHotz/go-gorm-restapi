@@ -30,7 +30,7 @@ func LoadEnvs() {
   dbPort = os.Getenv("DB_PORT")
   dbHost = os.Getenv("DB_HOST")
   dbUser = os.Getenv("DB_USER")
-  dbPass = os.Getenv("DB_PASS")
+  dbPass = os.Getenv("DB_PASSWORD")
   dbName = os.Getenv("DB_NAME")
 
   DSN = "host=" + dbHost + " port=" + dbPort + " user=" + dbUser + " dbname=" + dbName + " password=" + dbPass
