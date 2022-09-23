@@ -10,6 +10,8 @@ import (
 	"github.com/nachohotz/go-gorm-restapi/db/models"
 )
 
+var contentTypeTask = "application/json"
+
 // GetTasksHandler ...
 func GetTasksHandler(w http.ResponseWriter, r *http.Request) {
 	var tasks []models.Task
@@ -18,7 +20,7 @@ func GetTasksHandler(w http.ResponseWriter, r *http.Request) {
 
 	if tasks == nil || len(tasks) == 0 {
 		w.WriteHeader(http.StatusNotFound)
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", contentTypeTask)
 		w.Write([]byte(`{
       "status": 404,
       "message": "Tasks not found"
@@ -38,7 +40,7 @@ func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	if task.ID == 0 {
 		w.WriteHeader(http.StatusNotFound)
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", contentTypeTask)
 		w.Write([]byte(`{
       "status": 404,
       "message": "Task not found"
@@ -75,7 +77,7 @@ func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 
 	if task.ID == 0 {
 		w.WriteHeader(http.StatusNotFound)
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", contentTypeTask)
 		w.Write([]byte(`{
       "status": 404,
       "message": "Task not found"
@@ -85,7 +87,7 @@ func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 	db.DB.Delete(&task)
 
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", contentTypeTask)
 	w.Write([]byte(`{
     "status": 200,
     "message": "Task deleted"
