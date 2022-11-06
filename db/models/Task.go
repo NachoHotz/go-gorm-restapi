@@ -5,10 +5,10 @@ import "gorm.io/gorm"
 
 // Task ...
 type Task struct {
-	gorm.Model
+  gorm.Model
 
-	Title       string `json:"title" gorm:"not null;type:varchar(100)"`
-	Description string `json:"description"`
-	Done        bool   `json:"done" gorm:"default:false"`
-	UserID      uint   `json:"user_id"`
+  Title       string `json:"title" gorm:"not null;type:varchar(100)"`
+  Description string `json:"description"`
+  Done        bool   `json:"done" gorm:"default:false"`
+  UserID      uint   `json:"user_id"`
 }
