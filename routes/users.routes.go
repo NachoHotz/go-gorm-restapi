@@ -1,4 +1,3 @@
-// Package routes ...
 package routes
 
 import (
@@ -6,7 +5,6 @@ import (
   "github.com/nachohotz/go-gorm-restapi/controllers"
 )
 
-// UserRouter ...
 func UserRouter() *mux.Router {
   r := mux.NewRouter()
 

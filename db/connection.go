@@ -1,4 +1,3 @@
-// Package db ...
 package db
 
 import (
@@ -16,14 +15,11 @@ var dbUser string
 var dbPass string
 var dbName string
 
-// DSN ...
 var DSN string
 
-// DB ...
 var DB *gorm.DB
 var err error
 
-// LoadEnvs ...
 func LoadEnvs() {
   err := gotenv.Load()
 
@@ -42,9 +38,7 @@ func LoadEnvs() {
   log.Println("Loaded .env file")
 }
 
-// Connect ...
 func Connect() {
-  // connect to db
   DB, err = gorm.Open(postgres.Open(DSN), &gorm.Config{})
 
   if err != nil {

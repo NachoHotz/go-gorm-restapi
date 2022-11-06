@@ -1,9 +1,7 @@
-// Package models ...
 package models
 
 import "gorm.io/gorm"
 
-// Task ...
 type Task struct {
   gorm.Model
 

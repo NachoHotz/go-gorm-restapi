@@ -1,4 +1,3 @@
-// Package controllers ...
 package controllers
 
 import (
@@ -12,7 +11,6 @@ import (
 
 var contentType = "application/json"
 
-// GetUsersHandler ...
 func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
   var users []models.User
   db.DB.Find(&users)
@@ -30,7 +28,6 @@ func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(&users)
 }
 
-// GetUserHandler ...
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
   var uniqueUser models.User
   var userID = mux.Vars(r)["id"]
@@ -51,7 +48,6 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(&uniqueUser)
 }
 
-// PostUsersHandler ...
 func PostUsersHandler(w http.ResponseWriter, r *http.Request) {
   var body = r.Body
   var user models.User
@@ -70,7 +66,6 @@ func PostUsersHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(&user)
 }
 
-// DeleteUsersHandler ...
 func DeleteUsersHandler(w http.ResponseWriter, r *http.Request) {
   var userID = mux.Vars(r)["id"]
   var user models.User

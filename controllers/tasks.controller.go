@@ -1,4 +1,3 @@
-// Package controllers ...
 package controllers
 
 import (
@@ -12,7 +11,6 @@ import (
 
 var contentTypeTask = "application/json"
 
-// GetTasksHandler ...
 func GetTasksHandler(w http.ResponseWriter, r *http.Request) {
   var tasks []models.Task
 
@@ -31,7 +29,6 @@ func GetTasksHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(tasks)
 }
 
-// GetTaskHandler ...
 func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
   var taskID = mux.Vars(r)["id"]
   var task models.Task
@@ -51,7 +48,6 @@ func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(task)
 }
 
-// PostTaskHandler ...
 func PostTaskHandler(w http.ResponseWriter, r *http.Request) {
   var task models.Task
 
@@ -68,7 +64,6 @@ func PostTaskHandler(w http.ResponseWriter, r *http.Request) {
   json.NewEncoder(w).Encode(&task)
 }
 
-// DeleteTaskHandler ...
 func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
   var taskID = mux.Vars(r)["id"]
   var task models.Task
